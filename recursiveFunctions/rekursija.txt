@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>funky code</title>
+</head>
+<body>
+    <button onclick="fibbonacci()">rekinat</button>
+</body>
+<script>
+    let i = 0
+    let o = 1
+    let fib = 0
+    function fibbonacci() {
+        if (fib <= 500) {
+            fib=i+o
+            o=fib
+            console.log(fib)
+            fib=i+o
+            i=fib
+            console.log(fib)
+            fibbonacci()
+        }
+        else {
+            console.log("fib>500")
+        }
+    }
+</script>
+</html>
