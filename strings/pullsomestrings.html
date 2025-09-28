@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pull some strings</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let virkne1="Hello ";
+    let virkne2="diwo!";
+    let virkne3=virkne1.concat(virkne2);
+    console.log(virkne3);
+    
+    let masivs=virkne3.split(" ");
+    console.log(masivs);
+
+    let klasesbiedri="Agnese, Marks, Amanda, Patrcija, Nellija, Krista"
+    let klasesbiedri2=", Lauma, Adriāna, Valters, Gabriela, Dainārs, Toms"
+    let klasesbiedri3=klasesbiedri.concat(klasesbiedri2);
+    console.log(klasesbiedri3);
+
+
+    let e=klasesbiedri3.indexOf("e")
+    console.log(e)
+
+    let x=klasesbiedri3.indexOf("x")
+    if(x=-1){
+        console.log("Nav atrasts!")
+    }
+    else{
+        console.log(x)
+    }
+    
+
+    let whereP=klasesbiedri3.search("P");
+    console.log(whereP);
+
+    let whereChar=klasesbiedri3.charAt(34);
+    console.log(whereChar);
+
+
+    let masivsKlasesbiedri=klasesbiedri3.split(", ");
+    console.log(masivsKlasesbiedri);
+
+
+    let klasesbiedri1=masivsKlasesbiedri.join("-");
+    console.log(klasesbiedri1);
+
+/*     masivsKlasesbiedri1=klasesbiedri1.split("-");
+    console.log(masivsKlasesbiedri1); */
+    </script>
+</html>
