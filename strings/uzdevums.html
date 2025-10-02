@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
 
 </body>
 <script>
-    let vardi = "kaTrs vārds tiks rakStīts ar lielo burtu" ;
+    let vardi = "kaTrs vārds tiks rakStīts ar lielo burtu";
+    console.log(vardi);
+    vardi = vardi.split(" ");
+    for (let i = 0, x = vardi.length; i < x; i++) {
+        vardi[i] = vardi[i].toLowerCase()
+    }
+    for (let i = 0, x = vardi.length; i < x; i++) {
+        console.log(vardi);
+        vardi[i] = vardi[i][0].toUpperCase() + vardi[i].substr(1);
+    }
 
-    let array=vardi.split(" ");
-    console.log(array);
-    let vardi1=vardi.toLowerCase();
-    console.log(vardi1);
-
-    let array1=vardi1.split(" ");
-    console.log(array1)
-
-    let vardi3=vardi1.charAt(0).toUpperCase();
-    console.log(vardi3)
+    console.log(vardi);
 
 </script>
+
 </html>
