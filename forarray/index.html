@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        //uzd1
+        const cenas = [15.99, 4.50, 22.00, 1.99, 10.00];
+        let kopejaSumma = 0; // Sākuma vērtība
+
+        for (const cena of cenas) {
+            kopejaSumma = kopejaSumma + cena;
+        }
+        console.log('Kopējā pirkuma summa ir: ' + kopejaSumma.toFixed(2) + ' EUR');
+
+        //uzd2
+        const pilsetas = ["Rīga", "Cēsis", "Valmiera", "Ventspils", "Liepāja", "Jelgava"];
+        const garasPilsetas = []; // Tukšs masīvs rezultātam
+
+        pilsetas.forEach(function (pilseta) {
+            if (pilseta.length > 5) {
+                garasPilsetas.push(pilseta);
+            }
+        });
+console.log("Pilsētas ar nosaukumu, kas garāks par 5 simboliem:", garasPilsetas);
+
+        //uzd3
+        const precesCipari = [25.50, 10.00, 3.99, 149.99];
+
+        // Šeit glabāsim jaunās, noformētās vērtības:
+        const noformetasCenas = [];
+        precesCipari.forEach(function(eur){
+            precesCipari=.toFixed(2) //nope!!!
+        })
+
+    </script>
+</body>
+
+</html>
