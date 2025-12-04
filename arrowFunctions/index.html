@@ -49,6 +49,56 @@
 
         const programmetajuVardi = darbinieki.filter(d => d.amats === "Programmētājs").map(p => p.vards);
         console.log(programmetajuVardi);
+        /*         //moar uzd jk did them again
+                //func 1
+                let a1 = 2;
+                let b1 = 8;
+                const reizinat1 = (a, b) => a * b;
+                console.log(reizinat1);
+        
+                const sveiciens1 = vards => 'Sveiks, ' + vards + '!';
+        
+                const bezArgumentiem1 = () => 100;
+        
+                //uzd2
+                const vecumi1 = [5, 12, 18, 25, 3, 30]
+                pilngadigie1 = vecumi1.filter(num => num >= 18);
+                console.log(pilngadigie1)
+        
+                //uzd3
+                const produkti1 = [
+                    { id: 1, nosaukums: 'Piens', cena: 1.20 },
+                    { id: 2, nosaukums: 'Maize', cena: 0.80 },
+                    { id: 3, nosaukums: 'Siers', cena: 2.50 }
+                ];
+                const produktuNosaukumi1 = produkti1.map(p => p.nosaukums);
+                console.log(produktuNosaukumi1); */
+        const atbildeParSkaitli = num => {
+            if (num > 10) {
+                return 'Skaitlis ir liels!'
+            }
+            else {
+                return 'Skaitlis nav liels.'
+            }
+        }
+        console.log(atbildeParSkaitli(15));
+        console.log(atbildeParSkaitli(7));
+
+        izveidotObjektu = (nosaukums, vertiba) => {
+            
+        }
+
+        const darbinieki1 = [
+            { vards: 'Anna', amats: 'Grāmatvede', alga: 1500 },
+            { vards: 'Māris', amats: 'Programmētājs', alga: 2800 },
+            { vards: 'Elīna', amats: 'Grāmatvede', alga: 1650 },
+            { vards: 'Kaspars', amats: 'Vadītājs', alga: 3500 },
+            { vards: 'Līga', amats: 'Programmētājs', alga: 2400 },
+        ];
+        const kopejaAlga = darbinieki.reduce((akumulators, darbinieki1) => {
+            return akumulators + darbinieki1.alga;
+        }, 0);
+        console.log(kopejaAlga)
     </script>
 </body>
 
