@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Uzmini skaitli no 1 līdz 5!</h1>
+
+    <input id="logs1">
+
+    <button onclick="ievadit()">Ievadīt savu skaitli</button>
+
+    <p>Tu uzminēji skaitļus: <span id="izvade1"></span></p>
+
+    <p>Pareizo minējumu skaits: <span id="izvade2"></span></p>
+
+    <script>
+        let pareizas = [];
+        let lietotajaSkaitlis;
+        let datoraSkaitlis;
+
+        function ievadit() {
+            datoraSkaitlis = Math.floor(Math.random() * 5)//šeit jāpapildina kods, lai datora skaitlis iegūtu nejaušu vērību no 1 līdz 5
+            console.log(datoraSkaitlis);
+            lietotajaSkaitlis = document.getElementById("logs1").value;
+
+            if (lietotajaSkaitlis == datoraSkaitlis) {    //iekavās jānotiek pārbaudei!
+                pareizas.push(lietotajaSkaitlis);
+                document.getElementById("izvade1").innerHTML = datoraSkaitlis;   //kods jāpapildina, lai tiktu izvadīti pareizi atbildētie skaitļi
+                document.getElementById("izvade2").innerHTML = pareizas.length;   //kods jāpapildina tā, lai tiktu izvadīts pareizo atbilžu skaits
+            }
+            else {
+                alert("Datora skaitlis bija:" + datoraSkaitlis);  //jāizvada datora nejauši izvēlētais skaitlis
+            }
+        }
+    </script>
+</body>
+
+</html>

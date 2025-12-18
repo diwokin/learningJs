@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>Meiteņu vārdi: <span id="izvade"></span> </p>
+    <button onclick=spied()>Spied!</button>
+
+    <script>
+        let vardi = ["Anna", "Baiba", "Cilda", "Dārta", "Evita"];
+        let numurs = 0;
+        vardi.push("Frīda", "Gita");
+
+        function spied() {
+            document.getElementById("izvade").innerHTML = vardi[numurs];
+
+            if (numurs >= vardi.length - 1) {
+                numurs = 0
+            }
+            else {
+                numurs = numurs + 1; //numurs palielinās par 1
+
+            }
+
+        }
+
+
+    </script>
+
+</body>
+
+</html>
