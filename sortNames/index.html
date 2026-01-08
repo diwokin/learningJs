@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input id="vardiIn" type="text">
+    <button onclick="vardiStore()">Pievienot</button>
+    <p id="vardiOut"></p>
+    <button onclick="sadalit()"></button>
+    <script>
+        let vardi = [];
+        let komandaMax = 2;
+        let vardiString = vardi.map(item => item.vardi).join(", ");
+        function vardiStore() {
+            vardi.push({vards: document.getElementById("vardiIn").value})
+            console.log(vardi)
+            document.getElementById("vardiOut").innerHTML = vardiString + " " + vardi.length;
+        }
+        function sadalit() {
+
+        }
+    </script>
+</body>
+
+</html>
