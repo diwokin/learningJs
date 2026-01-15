@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <title>Komandu Sadalītājs</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; }
+        .komanda { background: #f4f4f4; margin: 5px 0; padding: 10px; border-left: 5px solid #007bff; }
+    </style>
+</head>
+<body>
+
+    <h2>Skolēnu saraksts</h2>
+    <input id="vardiIn" type="text" placeholder="Ieraksti vārdu">
+    <button onclick="vardiStore()">Pievienot</button>
+    <button onclick="veidotKomandas()">Sadalīt komandās</button>
+
+    <div id="izvade"></div>
+
+    <script>
+        let vardi = [];
+
+        function vardiStore() {
+            let input = document.getElementById("vardiIn");
+            let vertiba = input.value.trim();
+
+            if (vertiba !== "") {
+                // Pievienojam kā objektu, kā Tu vēlējies iepriekš
+                vardi.push({ vardi: vertiba });
+                input.value = ""; // Notīra lodziņu
+                console.log("Pievienots:", vertiba);
+                console.log (vardi)
+            }
+        }
+
+        function veidotKomandas() {
+            let izvade = document.getElementById("izvade");
+            izvade.innerHTML = "<h3>Komandas:</h3>";
+
+            // Cilpa, kas iet cauri masīvam pa divi (i += 2)
+            for (let i = 0; i < vardi.length; i += 2) {
+                let pirmais = vardi[i].vardi;
+                // Pārbauda, vai ir otrs cilvēks pārī, ja nav - ieraksta "nav pāra"
+                let otrais = vardi[i + 1] ? vardi[i + 1].vardi : "---";
+
+                izvade.innerHTML += `
+                    <div class="komanda">
+                        ${pirmais} un ${otrais}
+                    </div>
+                `;
+            }
+        }
+    </script>
+
+</body>
+</html>

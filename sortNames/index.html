@@ -17,9 +17,11 @@
         let komandaMax = 2;
         let vardiString = vardi.map(item => item.vardi).join(", ");
         function vardiStore() {
-            vardi.push({vards: document.getElementById("vardiIn").value})
+            vardi.push({ vards: document.getElementById("vardiIn").value })
             console.log(vardi)
-            document.getElementById("vardiOut").innerHTML = vardiString + " " + vardi.length;
+            vardiString = vardi.map(item => item.vardi).join(", ");
+            document.getElementById("vardiOut").innerHTML = vardi.map(vardi =>vardi.vards).join(", ")+" "+vardi.length;
+            
         }
         function sadalit() {
 
