@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: row;
+            background-color: DodgerBlue;
+            justify-content: center;
+        }
+
+        .container div {
+            background-color: #f1f1f1;
+            width: 800px;
+            margin: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <h1>📖 Lasīšanas žurnāls</h1>
+            <p>Cik lapas izlasīji?</p>
+            <p>Mērķis: 50 lapas dienā</p>
+
+
+            <input type="number" placeholder="Pirmdiena" id="1d"><br>
+            <input type="number" placeholder="Otrdiena" id="2d"><br>
+            <input type="number" placeholder="Trešdiena" id="3d"><br>
+            <input type="number" placeholder="Ceturtdiena" id="4d"><br>
+            <input type="number" placeholder="Piektdiena" id="5d"><br>
+            <input type="number" placeholder="Sestdiena" id="6d"><br>
+            <input type="number" placeholder="Svētdiena" id="7d"><br>
+            <button onclick="rekinat()">Aprēķināt progresu</button><br>
+
+            <p><b>Dienas progress:</b></p><br>
+            <p id="dienas"></p><br>
+
+            <p id="kopa"></p><br>
+            <p id="proc"></p>
+        </div>
+    </div>
+    <script>
+        let d1 = 0
+        let d2 = 0
+        let d3 = 0
+        let d4 = 0
+        let d5 = 0
+        let d6 = 0
+        let d7 = 0
+
+        function rekinat() {
+            d1 = document.getElementById("1d").value
+            d2 = document.getElementById("2d").value
+            d3 = document.getElementById("3d").value
+            d4 = document.getElementById("4d").value
+            d5 = document.getElementById("5d").value
+            d6 = document.getElementById("6d").value
+            d7 = document.getElementById("7d").value
+            let dati = [d1, d2, d3, d4, d5, d6, d7];
+            let dienas = ["Pirmdiena", "Otrdiena", "Trešdiena", "Ceturtdiena", "Piektdiena", "Sestdiena", "Svētdiena"]
+
+            //console.log(dienas[0]+": "+dati[0])
+
+
+            let text = ""
+            let proc = 0
+            for (let i = 0; i < dati.length; i++) {
+                proc = dati[i]/50*100
+                text=text+dienas[i] + ": " + dati[i]+" lpp. ("+proc+"% no mērķa)"+"<br>"
+            }
+            document.getElementById("dienas").innerHTML = (text)
+        }
+    </script>
+</body>
+
+</html>
