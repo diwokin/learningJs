@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="lv">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Apģērbu Robots</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 50px;
+            background-color: #f0f4f8;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #rezultats {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+            min-height: 1.2em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <h2>🤖 Robots Iesaka</h2>
+        <p>Ievadi temperatūru (°C):</p>
+        <input type="number" id="tempIevade" placeholder="Piem. 15">
+        <button onclick="raditIeteikumu()">Jautāt robotam</button>
+
+        <div id="rezultats"></div>
+    </div>
+
+    <script>
+        let gradi = document.getElementById("tempIevade").value       //5.Papildini rindiņu! Mainīgais gradi iegūst savu vērtību no loga tempIevade
+        function izveletiesApgierbu(temp) {
+            if (gradi < 5) {  //1.Uzraksti nosacījumu: ja temperatūra ir zemāka par 5 grādi
+                document.getElementById("rezultats").innerText = "Velc silto mēteli! ❄️"//Jāatgriež teksts: "Velc silto mēteli! ❄️"
+            }
+
+            else if (gradi > 5) { //2.Uzraksti nosacījumu: ja temperatūra ir no 5 līdz 20 grādi.
+                document.getElementById("rezultats").innerText = "Pietiks ar pavasara jaku. 🧥"//3.Jāatgriež teksts "Pietiks ar pavasara jaku. 🧥"
+            }
+
+            else {
+                document.getElementById("rezultats").innerText = "Šodien ir t-kreklu laiks! ☀️"
+            } //4.Jāatgriež teksts "Šodien ir t-kreklu laiks! ☀️"
+        }
+
+        function raditIeteikumu() {
+
+            if (gradi = "") {  //6.Ievadi nosacījumu, kas pārbauda vai mainīgais gradi ir tukšs.
+                document.getElementById("rezultats").innerText = "Lūdzu, ievadi skaitli!";
+                return;
+            }
+
+            let ieteikums = izveletiesApgierbu(Number(gradi));
+
+            document.getElementById("rezultats").innerText = ieteikums;
+        }
+    </script>
+
+</body>
+
+</html>

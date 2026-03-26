@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="lv">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sporta Centra Kalkulators</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+        }
+
+        h2 {
+            color: #2c3e50;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-student {
+            background-color: #3498db;
+        }
+
+        .btn-adult {
+            background-color: #2ecc71;
+        }
+
+        button:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+        }
+
+        #rezultats {
+            margin-top: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #34495e;
+            padding: 10px;
+            border-top: 2px solid #eee;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <h2>Sporta Centrs 🏋️</h2>
+        <p>Ievadi apmeklējumu skaitu:</p>
+        <input type="number" id="reizes" value="1" min="1">
+
+        <div class="btn-group">
+            <button class="btn-student" onclick="aprekinatCenu('skolens')">Esmu Skolēns</button>
+            <button class="btn-adult" onclick="aprekinatCenu('pieaugusais')">Esmu Pieaugušais</button>
+        </div>
+
+        <div id="rezultats">Kopā: 0.00 €</div>
+    </div>
+
+    <script>
+        // Galvenā funkcija ar parametru "tips"
+        function aprekinatCenu(tips) {
+            // Iegūstam skaitli no ievades lauka
+            let skaits = document.getElementById("reizes").value;
+            let cenaParReizi = 0;
+
+            // Loģika atkarībā no parametra
+            if (tips === "skolens") {  //1.pabeidz nosacījumu!
+                cenaParReizi = 3.50 //2.ievadi vērtību!
+            } else {
+                cenaParReizi = 7 //3.ievadi vērtību!
+            }
+
+            // Aprēķins
+            let kopsumma = skaits*cenaParReizi   //4.ievadi matemātisku darbību!
+
+                // Rezultāta parādīšana lapā
+                document.getElementById("rezultats").innerHTML =
+                "Tips: " + tips + "<br> Kopā jāmaksā: " + kopsumma.toFixed(2) + " €";  //5.noapaļo līdz 2 zīmēm aiz komata!
+        }
+    </script>
+
+</body>
+
+</html>
