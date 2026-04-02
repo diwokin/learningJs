@@ -9,7 +9,6 @@
         .container {
             display: flex;
             flex-direction: row;
-            background-color: DodgerBlue;
             justify-content: center;
         }
 
@@ -31,18 +30,18 @@
             <p>Mērķis: 50 lapas dienā</p>
 
 
-            <input type="number" placeholder="Pirmdiena" id="1d"><br>
-            <input type="number" placeholder="Otrdiena" id="2d"><br>
-            <input type="number" placeholder="Trešdiena" id="3d"><br>
-            <input type="number" placeholder="Ceturtdiena" id="4d"><br>
-            <input type="number" placeholder="Piektdiena" id="5d"><br>
-            <input type="number" placeholder="Sestdiena" id="6d"><br>
-            <input type="number" placeholder="Svētdiena" id="7d"><br>
+            <input type="number" class="lauks" placeholder="Pirmdiena" id="1d"><br>
+            <input type="number" class="lauks" placeholder="Otrdiena" id="2d"><br>
+            <input type="number" class="lauks" placeholder="Trešdiena" id="3d"><br>
+            <input type="number" class="lauks" placeholder="Ceturtdiena" id="4d"><br>
+            <input type="number" class="lauks" placeholder="Piektdiena" id="5d"><br>
+            <input type="number" class="lauks" placeholder="Sestdiena" id="6d"><br>
+            <input type="number" class="lauks" placeholder="Svētdiena" id="7d"><br>
             <button onclick="rekinat()">Aprēķināt progresu</button><br>
 
             <p><b>Dienas progress:</b></p><br>
             <p id="dienas"></p><br>
-
+            <hr>
             <p id="kopa"></p><br>
             <p id="proc"></p>
         </div>
@@ -57,26 +56,41 @@
         let d7 = 0
 
         function rekinat() {
-            d1 = document.getElementById("1d").value
+            /* d1 = document.getElementById("1d").value
             d2 = document.getElementById("2d").value
             d3 = document.getElementById("3d").value
             d4 = document.getElementById("4d").value
             d5 = document.getElementById("5d").value
             d6 = document.getElementById("6d").value
             d7 = document.getElementById("7d").value
-            let dati = [d1, d2, d3, d4, d5, d6, d7];
+            let dati = [d1, d2, d3, d4, d5, d6, d7]; */
+
+            let elementi = document.getElementsByClassName('lauks');
+            let dati = [];
+
+            for (let i = 0; i < elementi.length; i++) {
+                let vertiba = Number(elementi[i].value);
+                dati.push(vertiba);
+            }
+
             let dienas = ["Pirmdiena", "Otrdiena", "Trešdiena", "Ceturtdiena", "Piektdiena", "Sestdiena", "Svētdiena"]
 
             //console.log(dienas[0]+": "+dati[0])
 
-
             let text = ""
             let proc = 0
+            let kop = 0
             for (let i = 0; i < dati.length; i++) {
-                proc = dati[i]/50*100
-                text=text+dienas[i] + ": " + dati[i]+" lpp. ("+proc+"% no mērķa)"+"<br>"
+                proc = dati[i] / 50 * 100
+
+                text = text + dienas[i] + ": " + dati[i] + " lpp. (" + proc + "% no mērķa)" + "<br>"
+                kop = kop + dati[i]
             }
-            document.getElementById("dienas").innerHTML = (text)
+            let kopproc = kop / (50 * 7) * 100
+
+            document.getElementById("dienas").innerHTML = text
+            document.getElementById("kopa").innerHTML = kop
+            document.getElementById("proc").innerHTML = kopproc
         }
     </script>
 </body>
