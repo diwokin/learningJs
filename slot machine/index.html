@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>let's go gambling</title>
+
+    <style>
+        img {
+            width: 200px;
+        }
+        button{
+            padding: 15px;
+            margin-bottom: 50px;
+        }
+        .main {
+            align-content: center;
+            align-items: center;
+            display:flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <h1>LET'S GO GAMBLING</h1>
+        <button onclick="gamble()">spinit</button>
+    <div class="slots">
+        <img id="slot1">
+        <img id="slot2">
+        <img id="slot3">
+    </div>
+    </div>
+    <script>
+        let num1;
+        let num2;
+        let num3;
+
+        const bazinga = new Audio("sounds/bazinga.swf.mp3");
+        const ralphie = new Audio("sounds/pluh.mp3");
+        const smolbazinga = new Audio("sounds/bazinga-young-sheldon-not-old.mp3");
+
+        function gamble(){
+            num1=0;
+            num2=0;
+            num3=0;
+
+            num1=Math.floor(Math.random()*3)+1;
+            console.log(num1);
+            num2=Math.floor(Math.random()*3)+1;
+            console.log(num2);
+            num3=Math.floor(Math.random()*3)+1;
+            console.log(num3);
+
+            document.getElementById("slot1").src = "images/ralphie.jpg";
+            document.getElementById("slot2").src = "images/ralphie.jpg";
+            document.getElementById("slot3").src = "images/ralphie.jpg";
+            
+
+            if(num1===1){
+                document.getElementById("slot1").src = "images/bazinga.jpg";
+            }
+            if(num1===2){
+                document.getElementById("slot1").src = "images/ralphie.jpg";
+            }
+            if(num1===3){
+                document.getElementById("slot1").src = "images/smolbazinga.png";
+            }
+            
+            if(num2===1){
+                document.getElementById("slot2").src = "images/bazinga.jpg";
+            }
+            if(num2===2){
+                document.getElementById("slot2").src = "images/ralphie.jpg";
+            }
+            if(num2===3){
+                document.getElementById("slot2").src = "images/smolbazinga.png";
+            }
+
+            if(num3===1){
+                document.getElementById("slot3").src = "images/bazinga.jpg";
+            }
+            if(num3===2){
+                document.getElementById("slot3").src = "images/ralphie.jpg";
+            }
+            if(num3===3){
+                document.getElementById("slot3").src = "images/smolbazinga.png";
+            }
+
+            if(num1===1 && num2===1 && num3===1){
+                bazinga.play();
+            }
+            if(num1===2 && num2===2 && num3===2){
+                ralphie.play();
+            }
+            if(num1===3 && num2===3 && num3===3){
+                smolbazinga.play();
+            }
+        }
+    </script>
+</body>
+</html>
