@@ -1,44 +1,31 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Web dictaphone</title>
-    <link href="styles/app.css" rel="stylesheet" type="text/css">
-  </head>
-  <body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS Beat Sampler</title>
+    <style>
+        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; background: #121212; color: white; }
+        .pad-container { display: flex; gap: 20px; margin-top: 50px; }
+        .pad { width: 100px; height: 100px; border: 2px solid #555; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 8px; transition: 0.2s; }
+        .recording { background: #ff4444; border-color: white; }
+        .has-sound { border-color: #00ff88; color: #00ff88; }
+        .controls { margin-top: 40px; }
+        button { padding: 10px 20px; font-size: 1.2rem; cursor: pointer; }
+    </style>
+</head>
+<body>
 
-    <div class="wrapper">
-
-      <header>
-        <h1>Web dictaphone</h1>
-      </header>
-
-      <section class="main-controls">
-        <canvas class="visualizer" height="60px"></canvas>
-        <div id="buttons">
-          <button class="record">Record</button>
-          <button class="stop">Stop</button>
-        </div>
-      </section>
-
-      <section class="sound-clips">
-
-
-      </section>
-
+    <h1>Web Sampler</h1>
+    <div class="pad-container">
+        <div id="kick" class="pad">KICK</div>
+        <div id="snare" class="pad">SNARE</div>
+        <div id="hihat" class="pad">HI-HAT</div>
     </div>
 
-    <label for="toggle">❔</label>
-    <input type="checkbox" id="toggle">
-    <aside>
-      <h2>Information</h2>
+    <div class="controls">
+        <button id="playBtn">START BEAT</button>
+    </div>
 
-      <p>Web dictaphone is built using <a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator.getUserMedia">getUserMedia</a> and the <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder_API">MediaRecorder API</a>, which provides an easier way to capture Media streams.</p>
-
-      <p>Icon courtesy of <a href="http://findicons.com/search/microphone">Find Icons</a>. Thanks to <a href="http://soledadpenades.com/">Sole</a> for the Oscilloscope code!</p>
-    </aside>
-    <script src="scripts/app.js"></script>
-
-  </body>
+    <script src="sampler.js"></script>
+</body>
 </html>
