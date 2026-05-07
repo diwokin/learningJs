@@ -1,31 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>JS Beat Sampler</title>
     <style>
-        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; background: #121212; color: white; }
-        .pad-container { display: flex; gap: 50px; margin-top: 50px; }
-        .pad {width: 100px; height: 100px; border: 2px solid #555; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 8px; transition: 0.2s; }
-        .recording { background: #ff4444; border-color: white; }
-        .has-sound { border-color: #00ff88; color: #00ff88; }
-        .controls { margin-top: 40px; }
-        button { padding: 10px 20px; font-size: 1.2rem; cursor: pointer; }
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #121212;
+            color: white;
+        }
+
+        .pad-container {
+            display: flex;
+            gap: 50px;
+            margin-top: 50px;
+        }
+
+        .pad {
+            width: 100px;
+            height: 100px;
+            border: 2px solid #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+
+        .recording {
+            background: #ff4444;
+            border-color: white;
+        }
+
+        .has-sound {
+            border-color: #00ff88;
+            color: #00ff88;
+        }
+
+        .controls {
+            margin-top: 40px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .pad-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .upload-btn {
+            width: 100px;
+            font-size: 10px;
+            /* Padara failu izvēli mazāku un neuzkrītošāku */
+        }
     </style>
 </head>
+
 <body>
 
     <h1>Web Sampler</h1>
     <div class="pad-container">
-        <div id="kick" class="pad">KICK</div>
-        <div id="snare" class="pad">SNARE</div>
-        <div id="hihat" class="pad">HI-HAT</div>
+        <div class="pad-wrapper">
+            <div id="kick" class="pad">KICK</div>
+            <input type="file" id="kickUpload" accept="audio/*" class="upload-btn">
+        </div>
+        <div class="pad-wrapper">
+            <div id="snare" class="pad">SNARE</div>
+            <input type="file" id="snareUpload" accept="audio/*" class="upload-btn">
+        </div>
+        <div class="pad-wrapper">
+            <div id="hihat" class="pad">HI-HAT</div>
+            <input type="file" id="hihatUpload" accept="audio/*" class="upload-btn">
+        </div>
     </div>
 
     <div class="controls">
         <button id="playBtn">START BEAT</button>
     </div>
 
-    <script src="sampler.js"></script>
+    <script >
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const pads = {
+    kick: { element: document.getElementById('kick'), buffer: null },
+    snare: { element: document.getElementById('snare'), buffer: null },
+    hihat: { element: document.getElementById('hihat'), buffer: null }
+};
+
+let isPlaying = false;
+let currentStep = 0;
+let nextStepTime = 0;
+const tempo = 120.0;
+const lookahead = 25.0; // How often to check for new notes (ms)
+const scheduleAheadTime = 0.1; // How far to schedule notes (s)
+
+// --- RECORDING LOGIC ---
+async function setupMic() {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+    Object.keys(pads).forEach(key => {
+        const pad = pads[key];
+        let mediaRecorder;
+        let chunks = []; //šeit saglabā audio
+
+        pad.element.onmousedown = () => { //kad poga nospiesta
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            mediaRecorder = new MediaRecorder(stream); //sāk ierakstu
+            chunks = [];
+            mediaRecorder.ondataavailable = e => chunks.push(e.data); //šis "iespiež" audio datus datu masīvā
+            mediaRecorder.onstop = async () => {
+                const blob = new Blob(chunks, { type: 'audio/ogg; codecs=opus' }); //blob - audio ieraksts
+                const arrayBuffer = await blob.arrayBuffer();
+                pad.buffer = await audioCtx.decodeAudioData(arrayBuffer);
+                pad.element.classList.add('has-sound');
+            };
+            mediaRecorder.start();
+            pad.element.classList.add('recording');
+        };
+
+        pad.element.onmouseup = () => { //poga atlaista
+            mediaRecorder.stop();
+            pad.element.classList.remove('recording');
+        };
+    });
+}
+
+// --- SEQUENCER LOGIC --- (šis kods atskaņo)
+function playSound(buffer, time) {
+    if (!buffer) return;
+    const source = audioCtx.createBufferSource();
+    source.buffer = buffer;
+    source.connect(audioCtx.destination);
+    source.start(time);
+}
+
+function scheduler() {
+    while (nextStepTime < audioCtx.currentTime + scheduleAheadTime) {
+        scheduleNote(currentStep, nextStepTime);
+        advanceNote();
+    }
+    if (isPlaying) setTimeout(scheduler, lookahead);
+}
+
+function advanceNote() {
+    const secondsPerBeat = 60.0 / tempo / 2; // 8th notes
+    nextStepTime += secondsPerBeat;
+    currentStep = (currentStep + 1) % 8; // 8-step loop
+}
+
+function scheduleNote(step, time) {
+    // Basic 4/4 Beat Logic:
+    // Kick on 0 and 4
+    if ((step === 0 || step === 4) && pads.kick.buffer) playSound(pads.kick.buffer, time);
+    // Snare on 2 and 6
+    if ((step === 2 || step === 6) && pads.snare.buffer) playSound(pads.snare.buffer, time);
+    // Hi-hat on every step
+    if (pads.hihat.buffer) playSound(pads.hihat.buffer, time);
+}
+
+document.getElementById('playBtn').onclick = () => { //atskaņot
+    isPlaying = !isPlaying;
+    if (isPlaying) {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        currentStep = 0;
+        nextStepTime = audioCtx.currentTime;
+        scheduler();
+        document.getElementById('playBtn').innerText = "STOP BEAT";
+    } else {
+        document.getElementById('playBtn').innerText = "START BEAT";
+    }
+};
+
+setupMic();
+
+// --- UPLOAD LOGIC ---
+function setupUploads() {
+    const uploadMap = {
+        kick: document.getElementById('kickUpload'),
+        snare: document.getElementById('snareUpload'),
+        hihat: document.getElementById('hihatUpload')
+    };
+
+    Object.keys(uploadMap).forEach(key => {
+        uploadMap[key].onchange = async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Pārvēršam failu par ArrayBuffer
+            const arrayBuffer = await file.arrayBuffer();
+
+            try {
+                // Atkodējam audio datus, lai Web Audio API var tos atskaņot
+                const decodedData = await audioCtx.decodeAudioData(arrayBuffer);
+                pads[key].buffer = decodedData;
+                pads[key].element.classList.add('has-sound');
+                console.log(`${key} sound loaded successfully!`);
+            } catch (error) {
+                console.error("Error decoding audio file:", error);
+                alert("Could not decode audio file. Try a standard WAV or MP3.");
+            }
+        };
+    });
+}
+
+// Neaizmirsti izsaukt šo funkciju!
+setupUploads();
+    </script>
 </body>
+
 </html>

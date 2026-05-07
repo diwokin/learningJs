@@ -8,26 +8,26 @@ const pads = {
 let isPlaying = false;
 let currentStep = 0;
 let nextStepTime = 0;
-const tempo = 120.0; 
+const tempo = 120.0;
 const lookahead = 25.0; // How often to check for new notes (ms)
 const scheduleAheadTime = 0.1; // How far to schedule notes (s)
 
 // --- RECORDING LOGIC ---
 async function setupMic() {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    
+
     Object.keys(pads).forEach(key => {
         const pad = pads[key];
         let mediaRecorder;
-        let chunks = [];
+        let chunks = []; //šeit saglabā audio
 
-        pad.element.onmousedown = () => {
+        pad.element.onmousedown = () => { //kad poga nospiesta
             if (audioCtx.state === 'suspended') audioCtx.resume();
-            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder = new MediaRecorder(stream); //sāk ierakstu
             chunks = [];
-            mediaRecorder.ondataavailable = e => chunks.push(e.data);
+            mediaRecorder.ondataavailable = e => chunks.push(e.data); //šis "iespiež" audio datus datu masīvā
             mediaRecorder.onstop = async () => {
-                const blob = new Blob(chunks, { type: 'audio/ogg; codecs=opus' });
+                const blob = new Blob(chunks, { type: 'audio/ogg; codecs=opus' }); //blob - audio ieraksts
                 const arrayBuffer = await blob.arrayBuffer();
                 pad.buffer = await audioCtx.decodeAudioData(arrayBuffer);
                 pad.element.classList.add('has-sound');
@@ -36,14 +36,14 @@ async function setupMic() {
             pad.element.classList.add('recording');
         };
 
-        pad.element.onmouseup = () => {
+        pad.element.onmouseup = () => { //poga atlaista
             mediaRecorder.stop();
             pad.element.classList.remove('recording');
         };
     });
 }
 
-// --- SEQUENCER LOGIC ---
+// --- SEQUENCER LOGIC --- (šis kods atskaņo)
 function playSound(buffer, time) {
     if (!buffer) return;
     const source = audioCtx.createBufferSource();
@@ -76,7 +76,7 @@ function scheduleNote(step, time) {
     if (pads.hihat.buffer) playSound(pads.hihat.buffer, time);
 }
 
-document.getElementById('playBtn').onclick = () => {
+document.getElementById('playBtn').onclick = () => { //atskaņot
     isPlaying = !isPlaying;
     if (isPlaying) {
         if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -90,3 +90,36 @@ document.getElementById('playBtn').onclick = () => {
 };
 
 setupMic();
+
+// --- UPLOAD LOGIC ---
+function setupUploads() {
+    const uploadMap = {
+        kick: document.getElementById('kickUpload'),
+        snare: document.getElementById('snareUpload'),
+        hihat: document.getElementById('hihatUpload')
+    };
+
+    Object.keys(uploadMap).forEach(key => {
+        uploadMap[key].onchange = async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Pārvēršam failu par ArrayBuffer
+            const arrayBuffer = await file.arrayBuffer();
+
+            try {
+                // Atkodējam audio datus, lai Web Audio API var tos atskaņot
+                const decodedData = await audioCtx.decodeAudioData(arrayBuffer);
+                pads[key].buffer = decodedData;
+                pads[key].element.classList.add('has-sound');
+                console.log(`${key} sound loaded successfully!`);
+            } catch (error) {
+                console.error("Error decoding audio file:", error);
+                alert("Could not decode audio file. Try a standard WAV or MP3.");
+            }
+        };
+    });
+}
+
+// Neaizmirsti izsaukt šo funkciju!
+setupUploads();
