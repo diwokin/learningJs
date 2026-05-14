@@ -1,4 +1,4 @@
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 const pads = {
     kick: { element: document.getElementById('kick'), buffer: null },
     snare: { element: document.getElementById('snare'), buffer: null },
